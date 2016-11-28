@@ -15,11 +15,6 @@ class Composer
     /**
      * @var string
      */
-    private $vendorPath;
-
-    /**
-     * @var string
-     */
     private $loaderFilePath;
 
     /**
@@ -35,15 +30,14 @@ class Composer
     /**
      * Composer constructor.
      *
-     * @param string      $vendorPath
      * @param string      $loaderFilePath
+     * @param string      $composerPath
      * @param string|null $basePath The path where composer will may get called
      */
-    public function __construct($vendorPath, $loaderFilePath, $basePath = null)
+    public function __construct($loaderFilePath, $composerPath, $basePath = null)
     {
-        $this->vendorPath     = $vendorPath;
         $this->loaderFilePath = $loaderFilePath;
-        $this->autoload       = new Autoload($vendorPath . '/composer');
+        $this->autoload       = new Autoload($composerPath);
         $this->composer       = new Script($basePath);
     }
 
@@ -118,10 +112,10 @@ class Composer
             fwrite($res, '$loader->registerDirs(' . var_export(array_values($directories), true) . ');' . PHP_EOL);
         }
         if (!empty($namespaces)) {
-            fwrite($res, '$loader->registerNamespaces(' . var_export(array_values($namespaces), true) . ');' . PHP_EOL);
+            fwrite($res, '$loader->registerNamespaces(' . var_export($namespaces, true) . ');' . PHP_EOL);
         }
         if (!empty($classmap)) {
-            fwrite($res, '$loader->registerClasses(' . var_export(array_values($classmap), true) . ');' . PHP_EOL);
+            fwrite($res, '$loader->registerClasses(' . var_export($classmap, true) . ');' . PHP_EOL);
         }
 
         fwrite($res, '$loader->register();' . PHP_EOL);

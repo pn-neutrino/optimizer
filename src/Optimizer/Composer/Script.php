@@ -62,22 +62,16 @@ class Script
      */
     protected function getComposerCmd()
     {
-        if (!file_exists($this->getBasePath() . 'composer.phar')) {
+        if (!file_exists($this->getBasePath() . '/composer.phar')) {
             return 'composer';
         }
 
-        $binary = getenv('PHP_BINARY') ?: PHP_BINARY;
+        $binary = ($phpBinary = getenv('PHP_BINARY')) ? $phpBinary : PHP_BINARY;
 
         return $binary . ' composer.phar';
     }
 
-    /**
-     * Call composer
-     *
-     * @param string $action
-     * @param array  $options
-     */
-    protected function callComposer($action, $options = [])
+    protected function buildComposerCmd($action, $options = [])
     {
         $cmd = trim($this->getComposerCmd() . ' ' . $action);
 
@@ -96,6 +90,19 @@ class Script
         } else {
             $cmd = $cmd . ' 1> /dev/null 2> /dev/null';
         }
+
+        return $cmd;
+    }
+
+    /**
+     * Call composer
+     *
+     * @param string $action
+     * @param array  $options
+     */
+    protected function callComposer($action, $options = [])
+    {
+        $cmd = $this->buildComposerCmd($action, $options);
 
         $resource = proc_open($cmd, [], $pipes, $this->getBasePath());
 
