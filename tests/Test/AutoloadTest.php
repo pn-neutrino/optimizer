@@ -3,13 +3,14 @@
 namespace Test;
 
 use Neutrino\Optimizer\Composer\Autoload;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AutoloadTest
  *
  * @package Test
  */
-class AutoloadTest extends \PHPUnit_Framework_TestCase
+class AutoloadTest extends TestCase
 {
 
     public function testGetFiles()

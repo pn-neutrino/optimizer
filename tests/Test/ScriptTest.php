@@ -3,13 +3,14 @@
 namespace Test;
 
 use Neutrino\Optimizer\Composer\Script;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ScriptTest
  *
  * @package Test
  */
-class ScriptTest extends \PHPUnit_Framework_TestCase
+class ScriptTest extends TestCase
 {
     public function dataGetComposerCmd()
     {
