@@ -36,3 +36,21 @@ Process optimizer use composer dumpautoload with " --optimize ".
 
 This allows to load the autoload with the link each used. 
 This generates a huge array that will accelerate the loading process of the class.
+
+## Autoload :
+
+In your bootstrap file, Change your call of composer/autoload.php by : 
+ 
+```php
+// Load compiled autoloader. (Phalcon)
+if (file_exists("{path to optimized loader file}")) {
+  require "{path to optimized loader file}";
+
+  return;
+}
+
+/**
+ * Load composer autoloader.
+ */
+require "{path to vendor/composer/autoload.php}"
+```
